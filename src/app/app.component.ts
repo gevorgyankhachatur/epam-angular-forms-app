@@ -1,23 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   title = 'epam-angular-forms-app';
   form!: FormGroup;
-  /*
-  model = {
-    'password': this.form.controls?.password,
-    'confirmPassword': this.form.controls?.password_confirm,
-  };
-*/
+
+  formArray = new FormArray([]);
 
   ngOnInit() {
-    this.form = new FormGroup({
+    this.formArray.push(this.getEmptyForm());
+  }
+
+  getForms(): FormGroup[] {
+    return this.formArray.controls as FormGroup[];
+  }
+
+  removeItem(index: number): void {
+    this.formArray.removeAt(index);
+  }
+
+  addForm(): void {
+    this.formArray.push(this.getEmptyForm());
+  }
+
+  private getEmptyForm(): FormGroup {
+    return (this.form = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       surname: new FormControl(null, [Validators.required]),
       email: new FormControl('', [
@@ -29,18 +41,10 @@ export class AppComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
-      /*     password_confirm: new FormControl(null, [
+      passwordConfirm: new FormControl(null, [
         Validators.required,
         Validators.minLength(6),
-      ]),   */
-    });
-  }
-
-  submit() {
-    if (this.form.valid) {
-      console.log('Form: ', this.form);
-      //     const formData = { ...this.form.value };
-      //     console.log('Form Data:', formData);
-    }
+      ]),
+    }));
   }
 }

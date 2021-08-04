@@ -1,0 +1,98 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <h1>Forms Homework</h1>
+  
+      <br>
+      <br>
+  
+      <div class="form-control">
+        <label>Firstname</label>
+        <input class="validation" type="text" placeholder="Name" formControlName="name">
+        <div *ngIf="submitted && form.controls.name.invalid" class="validation">
+          <small class="errormessage" *ngIf="form.get('name')?.errors?.required">
+            Name can not be empty
+          </small>
+        </div>
+      </div>
+  
+      <br>
+      <br>
+  
+      <div class="form-control">
+        <label>Lastname</label>
+        <input class="validation" type="text" placeholder="Surame" formControlName="surname">
+        <div *ngIf="submitted && form.controls.surname.invalid" class="validation">
+          <small class="errormessage" *ngIf="form.get('surname')?.errors?.required">
+            Surname can not be empty
+          </small>
+        </div>
+      </div>
+  
+      <br>
+      <br>
+  
+      <div class="form-control">
+        <label>Email</label>
+        <input class="validation" type="text" placeholder="Email" formControlName="email">
+        <div *ngIf="submitted && form.controls.email.invalid" class="validation">
+          <small class="errormessage" *ngIf="submitted && form.controls.email.errors?.required">
+            Required email
+          </small>
+  
+          <small class="errormessage" *ngIf="submitted && (form.controls.email.errors?.email || form.controls.email.errors?.pattern)">
+            Email is invalid. For example : example@email.org
+          </small>
+        </div>
+      </div>
+  
+      <br>
+      <br>
+  
+      <div class="form-control">
+        <label>Password</label>
+        <input class="validation" type="password" placeholder="Password" formControlName="password">
+        <div *ngIf="submitted && form.controls.password.invalid" class="validation">
+          <small class="errormessage" *ngIf="form.controls.password.errors?.required">
+            Password can not be empty
+          </small>
+          <small class="errormessage" *ngIf="form.controls.password.errors?.minlength">
+            The length of password must be at least {{form.get('password')?.errors?.minlength.requiredLength}} characters.
+            Now it is {{form.get('password')?.errors?.minlength.actualLength}}.
+          </small>
+        </div>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="form-control">
+        <label>Cofirm Password</label>
+        <input class="validation" type="password" placeholder="Confirm Password" formControlName="passwordConfirm">
+        <div *ngIf="submitted && form.controls.passwordConfirm.invalid" class="validation">
+          <small class="errormessage" *ngIf="form.controls.passwordConfirm.errors?.required">
+            Password can not be empty
+          </small>
+          <small class="errormessage" *ngIf="form.controls.passwordConfirm.errors?.minlength">
+            The length of password must be at least {{form.get('passwordConfirm')?.errors?.minlength.requiredLength}} characters.
+            Now it is {{form.get('passwordConfirm')?.errors?.minlength.actualLength}}.
+          </small>
+          <small class="errormessage" *ngIf="form.controls.password.value !== form.controls.passwordConfirm.value">
+            Passwords did not match
+          </small>
+        </div>
+      </div>
+  
+      <br>
+      <br>
+  
+      <br>
+      <p>You can submit when the form is filled correctly</p>
+      <br>
+  
+      <div class="buttons">
+        <button *ngIf="canRemove" (click)="remove()" class="btn buttondelete" type="button">Delete form</button>
+        <button class="btn buttonsubmit" type="submit" (click)="submit()">Submit</button>
+        <button class="btn buttonadd" type="button" (click)="addNewForm()">Add new form</button>
+      </div>
+    </form>
+  </div>
